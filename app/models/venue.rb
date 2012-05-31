@@ -1,3 +1,3 @@
 class Venue < ActiveRecord::Base
-  # attr_accessible :title, :body
+  has_many :events, :foreign_key => "ticketweb_venue_id"
 end

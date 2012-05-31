@@ -1,3 +1,4 @@
 class Event < ActiveRecord::Base
-  # attr_accessible :title, :body
+  belongs_to :ticketweb_venue, :class_name => "Venue"
+  has_many :attractions
 end
