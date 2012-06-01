@@ -5,13 +5,19 @@ namespace :ticketweb do
   desc "Either creates or updates values in the database from the ticketweb api"
   task :load => :environment do
   	@page_num = 1
+    @failure_count = 0
+
   	@ticketweb_url = "http://api.ticketweb.com/snl/EventAPI.action?key=OnTLfy5CJ7XX1mLwynRp&version=1&method=json&page="
 
     repeat_every(10) do
       puts "Loading ticketweb data page #{@page_num}"
       unless load_ticketweb_page(@page_num)
-        puts "No more data, or something went wrong! Halting..." 
-      	break
+        if @failure_count < 10 
+          puts "No more data, or something went wrong! Skipping page..." 
+      	  @failure_count += 1
+        else
+          puts "Too many failures... Parsing stopped."
+        end
       end
       @page_num += 1
     end

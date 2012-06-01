@@ -30,10 +30,10 @@ ActiveRecord::Schema.define(:version => 20120531224218) do
     t.string   "name"
     t.string   "description",             :limit => 2000
     t.string   "url"
-    t.string   "tags"
+    t.text     "tags"
     t.string   "timezone"
     t.string   "status"
-    t.string   "additional_listing_text"
+    t.text     "additional_listing_text"
     t.datetime "start_date"
     t.datetime "end_date"
     t.datetime "on_sale_date"

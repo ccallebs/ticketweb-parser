@@ -7,10 +7,10 @@ class CreateEvents < ActiveRecord::Migration
       t.string 		:name
       t.string 		:description, :limit => 2000
       t.string 		:url
-      t.string 		:tags
+      t.text 		:tags
       t.string		:timezone
       t.string		:status
-      t.string		:additional_listing_text
+      t.text		:additional_listing_text
 
       # dates
       t.datetime 	      :start_date
