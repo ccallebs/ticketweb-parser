@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120531224218) do
+ActiveRecord::Schema.define(:version => 20120601153454) do
 
   create_table "attractions", :force => true do |t|
     t.integer  "sequence"
@@ -28,12 +28,12 @@ ActiveRecord::Schema.define(:version => 20120531224218) do
     t.integer  "ticketweb_event_id"
     t.string   "facebook_event_id"
     t.string   "name"
-    t.string   "description",             :limit => 2000
+    t.text     "description",             :limit => 4000
     t.string   "url"
     t.text     "tags"
     t.string   "timezone"
     t.string   "status"
-    t.text     "additional_listing_text"
+    t.text     "additional_listing_text", :limit => 4000
     t.datetime "start_date"
     t.datetime "end_date"
     t.datetime "on_sale_date"
