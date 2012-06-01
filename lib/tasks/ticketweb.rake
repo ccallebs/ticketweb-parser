@@ -4,7 +4,7 @@ require 'json'
 namespace :ticketweb do
   desc "Either creates or updates values in the database from the ticketweb api"
   task :load => :environment do
-  	@page_num = 36
+  	@page_num = 1
   	@ticketweb_url = "http://api.ticketweb.com/snl/EventAPI.action?key=OnTLfy5CJ7XX1mLwynRp&version=1&method=json&page="
 
     repeat_every(10) do
