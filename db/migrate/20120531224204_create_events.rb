@@ -5,7 +5,7 @@ class CreateEvents < ActiveRecord::Migration
       t.integer 	      :ticketweb_event_id
       t.string 		:facebook_event_id
       t.string 		:name
-      t.string 		:description
+      t.string 		:description, :limit => 2000
       t.string 		:url
       t.string 		:tags
       t.string		:timezone
