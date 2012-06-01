@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(:version => 20120531224218) do
     t.integer  "ticketweb_event_id"
     t.string   "facebook_event_id"
     t.string   "name"
-    t.string   "description"
+    t.string   "description",             :limit => 2000
     t.string   "url"
     t.string   "tags"
     t.string   "timezone"
@@ -44,8 +44,8 @@ ActiveRecord::Schema.define(:version => 20120531224218) do
     t.decimal  "price_display"
     t.integer  "venue_id"
     t.integer  "ticketweb_venue_id"
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
   end
 
   create_table "venues", :force => true do |t|

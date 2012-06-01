@@ -37,8 +37,8 @@ namespace :ticketweb do
   	  json['events'].each do |e|
   	    create_objects(e)
       end
-    #rescue
-     # return false
+    rescue
+      return false
     end
   end
 

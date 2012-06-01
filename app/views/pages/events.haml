@@ -10,6 +10,7 @@
     %div(class="header_description")
       - unless e.description.nil?
         = e.description.html_safe
+      = "#{e.attractions.count} Attractions"
     %div(class="event_venue")
       Venue:
       %span 
