@@ -1,5 +1,7 @@
 Todo::Application.routes.draw do
   root :to => 'pages#index'
+  match '/venues' => 'pages#venues'
+  match '/events' => 'pages#events'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

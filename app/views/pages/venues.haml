@@ -1,1 +1,23 @@
-%h2 Venues
+%h2
+  Venues
+  %span
+    = "#{@venues.count} total venues"
+
+  - @venues.each do |v|
+    %div(class="page_item")
+      %div(class="header_name")
+        - unless v.url.empty?
+          = link_to v.name, v.url
+        - else
+          = v.name
+        - unless v.twitter_id.empty?
+          = link_to image_tag("twitter-icon.png", :size => "40x40"), "http://twitter.com/#{v.twitter_id}"
+      %div(class="header_description")
+        = "#{v.address}, #{v.city}, #{v.state} #{v.postal_code}, #{v.country}"
+      %div(class="venue_event_list")
+        %ul
+          %div Events
+          - v.events.each do |e|
+            %li
+              = "#{e.start_date.to_s(:short)}"
+              = link_to e.name, e.url

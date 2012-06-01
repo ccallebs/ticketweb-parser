@@ -4,7 +4,7 @@ require 'json'
 namespace :ticketweb do
   desc "Either creates or updates values in the database from the ticketweb api"
   task :load => :environment do
-  	@page_num = 1
+  	@page_num = 36
   	@ticketweb_url = "http://api.ticketweb.com/snl/EventAPI.action?key=OnTLfy5CJ7XX1mLwynRp&version=1&method=json&page="
 
     repeat_every(10) do
@@ -44,8 +44,13 @@ namespace :ticketweb do
 
   def create_objects (event)
     # adding or updating venue
-  	new_venue = Venue.where(:ticketweb_venue_id => event['venue']['venueid']).first_or_create
+  	new_venue = Venue.where(:ticketweb_venue_id => event['venue']['venueid']).first
 
+    if new_venue.nil?
+      new_venue = Venue.new
+    end
+
+    new_venue.ticketweb_venue_id = event['venue']['venueid']
   	new_venue.name = event['venue']['name']
   	new_venue.url = event['venue']['venueurl']
   	new_venue.city = event['venue']['city']
@@ -61,15 +66,23 @@ namespace :ticketweb do
   	new_venue.save
 
     # adding or updating event
-  	new_event = Event.where(:ticketweb_event_id => event['eventid']).first_or_create
+  	new_event = Event.where(:ticketweb_event_id => event['eventid'],
+      :venue_id => new_venue.id).first
 
+    if new_event.nil?
+      new_event = new_venue.events.create(:ticketweb_event_id => event['eventid'])
+    end
+
+    new_event.ticketweb_venue_id = event['venue']['venueid']
+    new_event.ticketweb_event_id = event['eventid']
   	new_event.facebook_event_id = event['facebookeventid']
-  	new_event.name = event['name']
+  	new_event.name = event['eventname']
   	new_event.description = event['description']
-  	new_event.url = event['url']
+  	new_event.url = event['eventurl']
   	new_event.tags = event['tags']
   	new_event.status = event['status']
   	new_event.additional_listing_text = event['additionallistingtext']
+
   	new_event.start_date = event['dates']['startdate']
   	new_event.end_date = event['dates']['enddate']
   	new_event.on_sale_date = event['dates']['onsaledate']
@@ -86,10 +99,7 @@ namespace :ticketweb do
     	new_event.price_display = event['prices']['pricedisplay']
     end
 
-  	new_event.save
-
-  	new_venue.events << new_event
-  	new_venue.save
+    new_event.save
 
   	# adding attractions to event
   	event['attractionList'].each do |a|
@@ -114,6 +124,8 @@ namespace :ticketweb do
   	  new_event.attractions << new_attraction
   	  new_event.save
   	end
+
+    puts "Event count #{Event.all.count} || Venue count #{Venue.all.count} || Attraction count #{Attraction.all.count}"
 
   	puts "Event #{event['eventid']} saved..."
   end
