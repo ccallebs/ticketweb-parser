@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(:version => 20120531224218) do
   end
 
   create_table "events", :force => true do |t|
-    t.integer  "ticketweb_id"
+    t.integer  "ticketweb_event_id"
     t.string   "facebook_event_id"
     t.string   "name"
     t.string   "description"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20120531224218) do
     t.decimal  "price_low"
     t.decimal  "price_high"
     t.decimal  "price_display"
+    t.integer  "venue_id"
     t.integer  "ticketweb_venue_id"
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false

@@ -2,7 +2,7 @@ class CreateEvents < ActiveRecord::Migration
   def change
     create_table :events do |t|
       # details
-      t.integer 	      :ticketweb_id
+      t.integer 	      :ticketweb_event_id
       t.string 		:facebook_event_id
       t.string 		:name
       t.string 		:description
@@ -13,11 +13,11 @@ class CreateEvents < ActiveRecord::Migration
       t.string		:additional_listing_text
 
       # dates
-      t.datetime 	:start_date
-      t.datetime	:end_date
-      t.datetime	:on_sale_date
+      t.datetime 	      :start_date
+      t.datetime	      :end_date
+      t.datetime	      :on_sale_date
 
-  	  # images
+  	# images
       t.string 		:event_image_url_large
       t.string		:event_image_url_small
 
@@ -26,8 +26,9 @@ class CreateEvents < ActiveRecord::Migration
       t.decimal		:price_high
       t.decimal		:price_display
 
-      # venue foreign key
-      t.integer :ticketweb_venue_id
+      # venue foreign keys
+      t.integer         :venue_id
+      t.integer         :ticketweb_venue_id
 
       t.timestamps
     end

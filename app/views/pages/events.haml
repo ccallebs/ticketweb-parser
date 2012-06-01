@@ -1,0 +1,8 @@
+%h2 Events
+
+- @events.each do |e|
+  %div(class="event")
+    %div(class="header_name")
+      = e.name
+    %div(class="header_description")
+      = e.description
