@@ -20,37 +20,20 @@ module TicketWebAPI
 
   private
   def create_objects (event)
-    # adding or updating venue
-    new_venue = Venue.where(:ticketweb_venue_id => event['venue']['venueid']).first
-
-    if new_venue.nil?
-      new_venue = Venue.new
-      new_venue.populate(event)
-    end
+    new_venue = Venue.new_with_data(event)
 
     # saving venue
     new_venue.save
 
-    # adding or updating event
-    new_event = Event.where(:ticketweb_event_id => event['eventid'],
-      :venue_id => new_venue.id).first
+    new_event = Event.new_with_data(event)
 
-    if new_event.nil?
-      new_event = Event.new
-      new_event.populate(event)
-      new_event.save
-      new_venue.events << new_event
-      new_venue.save
-    end
+    new_event.save
+    new_venue.events << new_event
+    new_venue.save
 
     # adding attractions to event
     event['attractionList'].each do |a|
-      new_attraction = Attraction.where(:artist_id => a['artistid']).first
-      
-      if new_attraction.nil?
-      	new_attraction = Attraction.new
-        new_attraction.populate(a)
-      end
+      new_attraction = Attraction.new_with_data(a)
 
       # saving attraction
       new_attraction.save

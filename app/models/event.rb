@@ -4,32 +4,38 @@ class Event < ActiveRecord::Base
 
   validates_uniqueness_of :ticketweb_event_id
 
-  def populate(data)
-    @ticketweb_event_id = 		data['eventid']
-    @ticketweb_venue_id = 		data['venue']['venueid']
-    @ticketweb_event_id = 		data['eventid']
-    @facebook_event_id = 		data['facebookeventid']
-    @name = 					data['eventname']
-    @description = 				data['description']
-    @url = 						data['eventurl']
-    @tags = 					data['tags']
-    @status = 					data['status']
-    @additional_listing_text = 	data['additionallistingtext']
+  def self.new_with_data(data)
+    # adding or updating event
+    event = Event.where(:ticketweb_event_id => data['eventid']).first_or_create
 
-    @start_date = 				data['dates']['startdate']
-    @end_date = 				data['dates']['enddate']
-    @on_sale_date = 			data['dates']['onsaledate']
-    @timezone = 				data['dates']['timezone']
+    event.ticketweb_venue_id = 		    data['venue']['venueid']
+    event.ticketweb_event_id = 		    data['eventid']
+    event.facebook_event_id = 		    data['facebookeventid']
+    event.name = 					            data['eventname']
+    event.description = 			       	data['description']
+    event.url = 						          data['eventurl']
+    event.tags = 					            data['tags']
+    event.status = 					          data['status']
+    event.additional_listing_text =   data['additionallistingtext']
+
+    unless data['dates'].nil?
+      event.start_date = 				data['dates']['startdate']
+      event.end_date = 				  data['dates']['enddate']
+      event.on_sale_date = 			data['dates']['onsaledate']
+      event.timezone = 				  data['dates']['timezone']
+    end
 
     unless data['images'].nil?
-      @event_image_url_large = 	data['images']['large']
-      @event_image_url_small = 	data['images']['small']
+      event.event_image_url_large = 	data['images']['large']
+      event.event_image_url_small = 	data['images']['small']
     end
 
     unless data['prices'].nil?
-      @price_low = 				data['prices']['pricelow']
-      @price_high = 			data['prices']['pricehigh']
-      @price_display = 			data['prices']['pricedisplay']
+      event.price_low = 				data['prices']['pricelow']
+      event.price_high = 			  data['prices']['pricehigh']
+      event.price_display = 		data['prices']['pricedisplay']
     end
+
+    event
   end
 end
