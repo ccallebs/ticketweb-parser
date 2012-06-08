@@ -3,6 +3,14 @@ class Venue < ActiveRecord::Base
 
   validates_uniqueness_of :ticketweb_venue_id
 
+  def twitter_feed
+    Tweet.get_5_by_handle(@twitter_id)
+  end
+
+  def formatted_address
+    "#{address}, #{city}, #{state} #{postal_code}"
+  end
+
   def self.new_with_data(data)
     # adding or updating venue
     venue = Venue.where(:ticketweb_venue_id => data['venue']['venueid']).first_or_create

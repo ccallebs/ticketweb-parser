@@ -17,6 +17,8 @@ end
 gem 'haml'
 gem 'haml-rails'
 
+gem 'twitter'
+
 gem 'httparty'
 
 # Gems used only for assets and not required

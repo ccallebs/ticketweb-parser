@@ -6,7 +6,7 @@
 - @events.each do |e|
   %div(class="page_item")
     %div(class="header_name")
-      = link_to e.name, e.url
+      = link_to e.name, event_path(e)
     %div(class="header_description")
       - unless e.description.nil?
         = e.description.html_safe
@@ -14,7 +14,7 @@
     %div(class="event_venue")
       Venue:
       %span 
-        - unless e.venue.url.empty? 
+        - unless e.venue.url.nil? or e.venue.url.empty? 
           = link_to e.venue.name, e.venue.url
         - else
           = e.venue.name

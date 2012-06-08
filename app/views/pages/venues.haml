@@ -6,12 +6,7 @@
   - @venues.each do |v|
     %div(class="page_item")
       %div(class="header_name")
-        - unless v.url.empty?
-          = link_to v.name, v.url
-        - else
-          = v.name
-        - unless v.twitter_id.empty?
-          = link_to image_tag("twitter-icon.png", :size => "40x40"), "http://twitter.com/#{v.twitter_id}"
+        = link_to v.name, venue_path(v)
       %div(class="header_description")
         = "#{v.address}, #{v.city}, #{v.state} #{v.postal_code}, #{v.country}"
       %div(class="venue_event_list")
@@ -19,5 +14,5 @@
           %div Events
           - v.events.each do |e|
             %li
-              = "#{e.start_date.to_s(:short)}"
+              = "#{e.start_date.to_s}"
               = link_to e.name, e.url

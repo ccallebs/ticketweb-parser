@@ -1,0 +1,30 @@
+%div(class="row")
+  %div(class="span6")
+    %h2 
+      = @venue.name
+
+    %div
+      = @venue.formatted_address
+
+    - unless @venue.url.empty?
+      = link_to "Venue Page", @venue.url
+    - unless @venue.twitter_id.empty?
+      = link_to image_tag("twitter-icon.png", :size => "40x40"), "http://twitter.com/#{@venue.twitter_id}"
+
+  %div(class="span6")
+    - unless @venue.venue_image_large.blank?
+      = image_tag @venue.venue_image_large
+
+%div(class="row")
+  %div(class="span9")
+    %div(class="well")
+      %h3 Events
+      %ul
+        - @venue.events.each do |e|
+          %li
+            = link_to e.name, event_path(e)
+  %div(class="span3")
+    %h4 Tweets
+
+
+
