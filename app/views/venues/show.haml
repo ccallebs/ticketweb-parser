@@ -1,15 +1,16 @@
 %div(class="row")
-  %div(class="span6")
+  %div(class="span12")
     %h2 
       = @venue.name
-
+%div(class="row")
+  %div(class="span6")
     %div
       = @venue.formatted_address
+    %div
+      = link_to "TicketWeb Site", @venue.ticketweb_url(@venue.ticketweb_venue_id)
 
     - unless @venue.url.empty?
       = link_to "Venue Page", @venue.url
-    - unless @venue.twitter_id.empty?
-      = link_to image_tag("twitter-icon.png", :size => "40x40"), "http://twitter.com/#{@venue.twitter_id}"
 
   %div(class="span6")
     - unless @venue.venue_image_large.blank?
@@ -24,7 +25,14 @@
           %li
             = link_to e.name, event_path(e)
   %div(class="span3")
-    %h4 Tweets
+    %h3 
+      Tweets
+      - unless @venue.twitter_id.empty?
+        = link_to image_tag("twitter-icon.png", :size => "40x40"), "http://twitter.com/#{@venue.twitter_id}"
+    %ul
+    - @venue.twitter_feed(@venue.twitter_id).each do |t|
+      %li
+        = t.text
 
 
 

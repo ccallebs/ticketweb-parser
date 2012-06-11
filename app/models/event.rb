@@ -38,4 +38,8 @@ class Event < ActiveRecord::Base
 
     event
   end
+
+  def ticketweb_url(value)
+   "http://www.ticketweb.com/t3/sale/SaleEventDetail?dispatch=loadSelectionData&eventId=#{value}"
+  end
 end
