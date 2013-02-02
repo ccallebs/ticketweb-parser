@@ -27,16 +27,11 @@ module TicketWebAPI
 
     new_event = Event.new_with_data(event)
 
-    new_event.save
     new_venue.events << new_event
-    new_venue.save
 
-    # adding attractions to event
+# adding attractions to event
     event['attractionList'].each do |a|
       new_attraction = Attraction.new_with_data(a)
-
-      # saving attraction
-      new_attraction.save
 
       # performing final event save
       new_event.attractions << new_attraction
